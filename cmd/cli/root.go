@@ -9,13 +9,9 @@ import (
 	"io/fs"
 	"os"
 
+	"github.com/elewis787/boa"
 	gen "github.com/marcelo-fm/arcpy-migrate/internal/arcpy-gen"
 	"github.com/spf13/cobra"
-)
-
-const (
-	START = "CREATE TABLE"
-	END   = ";"
 )
 
 var (
@@ -33,10 +29,14 @@ var rootCmd = &cobra.Command{
 	Long: `
   Arcpy Migrate will parse any SQL files passed into the
   Stdin  and will generate arcpy python commands to
-  run and create or alter tables through the ArcGIS environment.
+  run and create tables through the ArcGIS environment.
 
   Usage:
-    cat create_tables.sql | arcpy-migrate
+    cat <some_file>.sql | arcpy-migrate
+
+  Examples:
+    create a migration script file:
+      cat <some_file>.sql | arcpy-migrate > migration_$(date "+%Y%m%d%H%M").py
   `,
 	Args: cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -62,6 +62,8 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
+	rootCmd.SetUsageFunc(boa.UsageFunc)
+	rootCmd.SetHelpFunc(boa.HelpFunc)
 	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.arcpy-migrate.yaml)")
 }
 
