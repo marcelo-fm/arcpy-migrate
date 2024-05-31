@@ -16,7 +16,7 @@ const (
 )
 
 func NewAddFieldParams(inTable, fieldName string, fieldType FieldType) *AddFieldParams {
-	fieldAlias := strings.ToTitle(strings.ReplaceAll(inTable, "_", " "))
+	fieldAlias := strings.ReplaceAll(fieldName, "_", " ")
 	return &AddFieldParams{
 		inTable:    inTable,
 		fieldName:  fieldName,
@@ -69,7 +69,7 @@ func (p *AddFieldParams) Command() string {
 		c = fmt.Sprintf("%sfield_length=\"%s\",", c, *p.fieldLength)
 	}
 	if p.fieldAlias != nil {
-		c = fmt.Sprintf("%sfield_alias=\"%s\",", c, *p.fieldAlias)
+		c = fmt.Sprintf("%sfield_alias=\"%s\".title(),", c, *p.fieldAlias)
 	}
 	if p.fieldIsNullable != nil {
 		c = fmt.Sprintf("%sfield_is_nullable=\"%s\",", c, *p.fieldIsNullable)
