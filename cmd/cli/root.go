@@ -11,7 +11,6 @@ import (
 
 	gen "github.com/marcelo-fm/arcpy-migrate/internal/arcpy-gen"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 const (
@@ -20,8 +19,8 @@ const (
 )
 
 var (
-	err       error
-	cfgFile   string
+	err error
+	// cfgFile   string
 	filenames []string
 	files     []fs.DirEntry
 	dir       string
@@ -63,24 +62,22 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.arcpy-migrate.yaml)")
+	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.arcpy-migrate.yaml)")
 }
 
 func initConfig() {
-	if cfgFile != "" {
-		viper.SetConfigFile(cfgFile)
-	} else {
-		home, err := os.UserHomeDir()
-		cobra.CheckErr(err)
+	// } else {
+	// 	home, err := os.UserHomeDir()
+	// 	cobra.CheckErr(err)
+	//
+	// 	viper.AddConfigPath(home)
+	// 	viper.SetConfigType("yaml")
+	// 	viper.SetConfigName(".arcpy-migrate")
+	// }
 
-		viper.AddConfigPath(home)
-		viper.SetConfigType("yaml")
-		viper.SetConfigName(".arcpy-migrate")
-	}
-
-	viper.AutomaticEnv()
-
-	if err = viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
-	}
+	// viper.AutomaticEnv()
+	//
+	// if err = viper.ReadInConfig(); err == nil {
+	// 	fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
+	// }
 }
