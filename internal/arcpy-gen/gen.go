@@ -152,6 +152,7 @@ Usage:
     if arg not in {"up", "down"}:
         print(usage_msg)
         sys.exit(0)
+    arcpy.env.workspace = SDE
     if arg == "up":
         up()
     if arg == "down":
