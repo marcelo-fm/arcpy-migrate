@@ -110,7 +110,7 @@ func fieldLine(lin []byte, tbName string) []byte {
 	}
 
 	params := NewAddFieldParams(tbName, fieldName, fieldType)
-	params.SetFieldIsNullable(bytes.Contains(lin, []byte("NOT NULL")))
+	params.SetFieldIsNullable(!bytes.Contains(lin, []byte("NOT NULL")))
 	cmd := params.Command()
 	cmd = fmt.Sprintf("%s%s", INDENT, cmd)
 	return []byte(cmd)
